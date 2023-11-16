@@ -1,5 +1,4 @@
 //javascript goes here
-//present and prepare the game
 console.log("This Is Sparta!!!")
 let userChoice="i";
 let compChoice="j";
@@ -16,9 +15,6 @@ const announce=document.createElement('div');
 start.addEventListener('click',createPlay);
 
 function createPlay(){
-  //find out how to remove all children and stick it here
-  //while box.hasChild
-  //remove first child
   let child=box.lastElementChild;
   while(child){
     box.removeChild(child);
@@ -102,7 +98,7 @@ function lose(){
   announce.textContent="You lost this round.";
 }
 function tie(){
-  announce.textContent="This round was a tie."; 
+  announce.textContent="This round was a tie.";
 }
 
 function whoWon(){
@@ -134,4 +130,3 @@ function whoWon(){
   }
   play();
 }
-
