@@ -1,109 +1,113 @@
 //javascript goes here
-
-//step0: present the game
+//present and prepare the game
 console.log("This Is Sparta!!!")
 let userChoice="i";
 let compChoice="j";
+let userC='';
+let compC='';
 let userPoints=0;
 let compPoints=0;
-console.log(userChoice)
-console.log(compChoice)
-play();
+
+const start=document.querySelector('#startButton');
+const box=document.querySelector('#playBox');
+const scoreboard=document.createElement('div');
+const choices=document.createElement('div');
+const announce=document.createElement('div');
+start.addEventListener('click', createPlay);
+
+function createPlay(){
+  //find out how to remove all children and stick it here
+  userPoints=0;
+  compPoints=0;
+  const rock=document.createElement('button');
+  const paper=document.createElement('button');
+  const scissor=document.createElement('button');
+  rock.textContent='ROCK';
+  paper.textContent='PAPER';
+  scissor.textContent='SCISSOR';
+  box.appendChild(scoreboard);
+  box.appendChild(rock);
+  box.appendChild(paper);
+  box.appendChild(scissor);
+  box.appendChild(choices);
+  box.appendChild(announce);
+  rock.addEventListener('click',()=>{userChoice='r';whoWon();});
+  paper.addEventListener('click',()=>{userChoice='p';whoWon();});
+  scissor.addEventListener('click',()=>{userChoice='s';whoWon();});
+}
+
+  scoreboard.textContent="Your Score: "+userPoints+"\nComputerScore: "+compPoints;
 
 function play(){
   if(userPoints<5&&compPoints<5){
-    console.log("Your Score: "+userPoints+"\nComputer Score: "+compPoints)
-    getChoice();
-    compChoose();
-    whoWon();
+    scoreboard.textContent="Your Score: "+userPoints+"\nComputer Score: "+compPoints;
   }else if(userPoints==5){
-    console.log("You Won The Game!!")
-    playAgain();
+    announce.textContent="YAY!! You Won The Game!!";
+//  playAgain();
   }else{
-    console.log("You Lost The Game")
-    playAgain();
+    announce.textContent="SORRY. You Lost The Game.";
+//  playAgain();
   }
 }
 
-function playAgain(){
-let again=prompt("Play Again? 'y' or 'n': ")
-  if(again=="y"){
-    userPoints=0;
-    compPoints=0;
-    play();
-  }
-}
-
-//step1: ask the users choice and display it
-function getChoice(){
-  userChoice=prompt(`Choose "r", "p", or "s": `);
-  console.log(userChoice)
-}
-//step2: randomly generate the computers choice and display it
 function compChoose(){
-  let randomNum=Math.floor(Math.random()*(3-1)+1);
-  console.log("Random Number: ",randomNum)
+  let randomNum=Math.floor(Math.random()*(3-1+1)+1);
+//console.log("Random Number: ",randomNum)
   if (randomNum==1){
+    compC='Rock';
     compChoice="r";
   }else if(randomNum==2){
+    compC="Paper";
     compChoice="p";
   }else if(randomNum==3){
+    compC="Scissors";
     compChoice="s";
   }
-  console.log(compChoice);
 }
+
 function win(){
   userPoints++;
-  console.log("You won this round!")
-  play();
+  announce.textContent="You won this round!";
 }
 function lose(){
   compPoints++;
-  console.log("You lost this round")
-  play();
+  announce.textContent="You lost this round.";
 }
 function tie(){
-  console.log("This round was a tie")
-  play();
+  announce.textContent="This round was a tie."; 
 }
-//step3: determinee who won and display the winner
+
 function whoWon(){
+  compChoose();
   if (userChoice=="r"){
-    if (compChoice=="r"){
-      //tie
+    userC="Rock";
+    if (compChoice=="r"){;
       tie();
     }else if(compChoice=="p"){
-      //comp wins
       lose();
     }else{
-      //user wins
       win();
     }
   }else if(userChoice=="p"){
+    userC="Paper";
     if(compChoice=="r"){
-      //user wins
       win();
     }else if(compChoice=="p"){
-      //tie
       tie();
     }else{
-      //comp wins
       lose();
     }
   }else{
+    userC="Scissors";
     if(compChoice=="r"){
-      //comp wins
       lose();
     }else if(compChoice=="p"){
-      //user wins
       win();
     }else{
-      //tie
       tie();
     }
   }
+  choices.textContent="You: "+userC+" / / Computer: "+compC;
+  play();
 }
-//step4: add a point to the winners total point count
 
-//step5: determine if game is over, if so display "the winner" and "Game Over"
-         //if not go back to step1
